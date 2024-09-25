@@ -1,10 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import loginIcons from '../assets/signin.gif'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useState } from 'react'
 import imageToBase64 from '../helper/imageToBase64'
+import SummaryApi from '../common';
+import { toast } from 'react-toastify';
 
 
 const SignUp = () => {
@@ -19,6 +21,8 @@ const SignUp = () => {
         profilePic : '',
     })
 
+    const navigate = useNavigate()
+
     const handleOnChange = (e) => {
         const {name, value} = e.target
 
@@ -30,8 +34,31 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
+
+        if(data.password === data.confirmPassword){
+            const dataResponse = await fetch(SummaryApi.signUp.url, {
+                method : SummaryApi.signUp.method,
+                headers : {
+                    'content-Type' : 'application/json'
+                },
+                body : JSON.stringify(data)
+            })
+    
+            const dataAPI = await dataResponse.json()
+
+            if(dataAPI.success) {
+                toast.success(dataAPI.message)
+                navigate('/login') // Would probably need to change this to a welcome page of sorts
+            }else if (dataAPI.error) {
+                toast.error(dataAPI.message)
+            }
+    
+        }else {
+            console.log("Password does not match")
+        }
+
     }
 
     const handlueUploadPic = async(e) => {
