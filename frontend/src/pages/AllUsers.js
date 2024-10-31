@@ -5,6 +5,8 @@ import moment from 'moment'
 import { MdEdit } from "react-icons/md";
 import ChangeUserRole from '../components/ChangeUserRole';
 
+
+// TODO: Add a function to edit user details other than role
 const AllUsers = () => {
     const [allUsers, setAllUsers] = useState([])
     const [openUpdateRole, setOpenUpdateRole] = useState(false)
