@@ -36,7 +36,15 @@ const SummaryApi = {
    update_product : {
     url : `${backendDomain}/api/update-product`,
     method : 'post'
-   }
+   },
+   product_category : {
+    url : `${backendDomain}/api/get-product-category`,
+    method : 'get'
+   },
+   product_by_category : {
+    url : `${backendDomain}/api/get-product-by-category`,
+    method : 'post'
+   },
 }
 
 export default SummaryApi

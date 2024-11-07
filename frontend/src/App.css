@@ -24,3 +24,8 @@
 .no-arrows[type=number] {
     -moz-appearance: textfield;
 }
+
+/** Hide scrollbar */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
