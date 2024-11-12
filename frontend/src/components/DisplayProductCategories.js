@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import fetchProductByCategory from '../helper/fetchProductByCategory'
 import productCategory from '../helper/productCategory'
 import displayUSDCurrency from '../helper/displayCurrency'
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 import addToCart from '../helper/addToCart'
 import { Link } from 'react-router-dom'
 import { UseUser } from '../context'
 
-const VerticalCardProduct = ({category, heading}) => {
+const DisplayProductCategories = ({category, heading}) => {
   const user = UseUser()
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const loadingList = new Array(8).fill(null)
 
-  const [scroll, setScroll] = useState(0)
-  const scrollElement = useRef()
   
 
   const fetchData = async() => {
@@ -29,13 +26,6 @@ const VerticalCardProduct = ({category, heading}) => {
     fetchData()
   },[])
 
-  const scrollRight = () => {
-    scrollElement.current.scrollLeft += 300
-  }
-
-  const scrollLeft = () => {
-    scrollElement.current.scrollLeft -= 300
-  }
 
   function getCategoryLabel(value) {
     const category = productCategory.find(item => item.value === value)
@@ -47,9 +37,8 @@ const VerticalCardProduct = ({category, heading}) => {
 
       <h2 className='text-2xl font-semibold py-4'>{heading}</h2>
 
-      <div className='flex items-center gap-4 md:gap-6 overflow-x-scroll scrollbar-none transition-all' ref={scrollElement}>
-      <button className='bg-white shadow-md rounded-full p-1 absolute left-1 text-lg hidden md:block' onClick={scrollLeft}><FaAngleLeft/></button>
-      <button className='bg-white shadow-md rounded-full p-1 absolute right-1 text-lg hidden md:block' onClick={scrollRight}><FaAngleRight/></button>
+      <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,300px))] justify-between md:gap-6 overflow-x-scroll scrollbar-none transition-all'>
+      
         {
           loading ? (
             loadingList.map((product, index) => {
@@ -89,4 +78,4 @@ const VerticalCardProduct = ({category, heading}) => {
   )
 }
 
-export default VerticalCardProduct
+export default DisplayProductCategories

@@ -5,8 +5,11 @@ import displayUSDCurrency from '../helper/displayCurrency'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import addToCart from '../helper/addToCart'
+import { UseUser } from '../context'
 
 const HorizontalCardProduct = ({category, heading}) => {
+
+  const user = UseUser()
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const loadingList = new Array(8).fill(null)
@@ -20,7 +23,6 @@ const HorizontalCardProduct = ({category, heading}) => {
     const productCategory = await fetchProductByCategory(category)
     setLoading(false)
 
-    console.log("Horizontal data", productCategory?.data)
     setData(productCategory?.data)
   }
 
@@ -76,7 +78,7 @@ const HorizontalCardProduct = ({category, heading}) => {
                     <h2 className='font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black'>{product?.productName}</h2>
                     <p className='capitalize text-slate-500 text-ellipsis line-clamp-1'>{getCategoryLabel(product?.category)}</p>
                     <p className='text-fiskBlue font-medium'>{ displayUSDCurrency(product?.price) }</p>
-                    <button className='text-sm bg-lightFiskBlue hover:bg-fiskBlue text-white py-1 px-3 rounded-full' onClick={(e) => addToCart(e, product?._id)}>Add to Cart</button>
+                    <button className='text-sm bg-lightFiskBlue hover:bg-fiskBlue text-white py-1 px-3 rounded-full' onClick={(e) => addToCart(e, product?._id, user)}>Add to Cart</button>
                   </div>
                 </Link>
               )

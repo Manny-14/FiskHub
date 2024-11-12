@@ -11,4 +11,9 @@ const productCategory = [
     // More coming soon
 ]
 
+export function getCategoryLabel(value) {
+    const category = productCategory.find(item => item.value === value)
+    return category ? category.label : 'Unknown Category'
+}
+
 export default productCategory

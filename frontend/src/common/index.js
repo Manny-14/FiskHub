@@ -45,6 +45,26 @@ const SummaryApi = {
     url : `${backendDomain}/api/get-product-by-category`,
     method : 'post'
    },
+   product_details : {
+    url : `${backendDomain}/api/product-details`,
+    method : 'post'
+   },
+   add_to_cart : {
+    url : `${backendDomain}/api/add-to-cart`,
+    method : 'post'
+   },
+   items_in_cart_count : {
+    url : `${backendDomain}/api/items-in-cart-count`,
+    method : 'get'
+   },
+   view_cart : {
+    url : `${backendDomain}/api/view-cart`,
+    method : 'get'
+   },
+   remove_product_from_cart : {
+    url : `${backendDomain}/api/remove-product-from-cart`,
+    method : 'post'
+   },
 }
 
 export default SummaryApi
