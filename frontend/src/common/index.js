@@ -65,6 +65,14 @@ const SummaryApi = {
     url : `${backendDomain}/api/remove-product-from-cart`,
     method : 'post'
    },
+   search : {
+    url : `${backendDomain}/api/search`,
+    method : 'get'
+   },
+   filter_products : {
+    url : `${backendDomain}/api/filter-products`,
+    method : 'post'
+   }
 }
 
 export default SummaryApi

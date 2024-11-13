@@ -50,7 +50,7 @@ const SignUp = () => {
 
             if(dataAPI.success) {
                 toast.success(dataAPI.message)
-                navigate('/login') // Would probably need to change this to a welcome page of sorts
+                navigate('/') // Would probably need to change this to a welcome page of sorts
             }else if (dataAPI.error) {
                 toast.error(dataAPI.message)
             }

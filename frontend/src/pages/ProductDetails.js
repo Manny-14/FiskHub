@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import productCategory from '../helper/productCategory'
 import productCondition from '../helper/productCondition'
 import displayUSDCurrency from '../helper/displayCurrency'
 import DisplayProductCategories from '../components/DisplayProductCategories'
+import addToCart from '../helper/addToCart'
+import { UseUser } from '../context'
 
 const ProductDetails = () => {
 
+  const user = UseUser()
+  const navigate = useNavigate()
   const [ data, setData ] = useState({
     productName : '',
     posterName : '',
@@ -34,7 +38,6 @@ const ProductDetails = () => {
 
   const fetchProductDetails = async() => {
     console.log("hi")
-    setLoading(true)
     const response = await fetch(SummaryApi.product_details.url, {
       method : SummaryApi.product_details.method,
       headers : {
@@ -44,7 +47,7 @@ const ProductDetails = () => {
         productId : params?.id
       })
     })
-    setLoading(false)
+
     const dataResponse = await response.json()
 
     setData(dataResponse?.data)
@@ -53,8 +56,10 @@ const ProductDetails = () => {
 
 
   useEffect(() => {
+    setLoading(true)
     fetchProductDetails()
-  },[])
+    setLoading(false)
+  },[params])
 
   const handleMouseOnProduct = (imageURL) => {
     setActiveImage(imageURL)
@@ -72,6 +77,15 @@ const ProductDetails = () => {
       y
     })
   },[zoomCoords])
+
+  const handleAddToCart = async(e, id) => {
+    await addToCart(e, id, user)
+  }
+
+  const handleBuy = async(e, id) => {
+    handleAddToCart(e, id, user)
+    navigate("/cart")
+  }
 
   function getCategoryLabel(value) {
     const category = productCategory.find(item => item.value === value)
@@ -115,9 +129,9 @@ const ProductDetails = () => {
               loading ? (
                 <div className='flex gap-2 lg:flex-col overflow-scroll scrollbar-none h-full'>
                   {
-                    imageListLoading.map(el =>{
+                    imageListLoading.map((el, index) =>{
                       return (
-                        <div className='h-20 w-20 bg-slate-200 rounded animate-pulse' key={"Loading Image"}></div>
+                        <div className='h-20 w-20 bg-slate-200 rounded animate-pulse' key={"Loading Image"+index}></div>
                       )
                     })
                   }
@@ -171,8 +185,8 @@ const ProductDetails = () => {
               <p>Condition: {getConditionLabel(data?.productCondition)}</p>
 
               <div className='flex items-center gap-3 my-2'>
-                <button className='border-2 border-lightFiskBlue rounded px-3 py-1 min-w-[120px] text-lightFiskBlue font-medium hover:bg-lightFiskBlue hover:text-white hover:transition-all'>Buy</button>
-                <button className='border-2 border-lightFiskBlue bg-lightFiskBlue text-white rounded px-3 py-1 min-w-[120px] font-medium hover:bg-white hover:text-lightFiskBlue hover:transition-all'>Add to Cart</button>
+                <button className='border-2 border-lightFiskBlue rounded px-3 py-1 min-w-[120px] text-lightFiskBlue font-medium hover:bg-lightFiskBlue hover:text-white hover:transition-all' onClick={(e)=> handleBuy(e, data._id)}>Buy</button>
+                <button className='border-2 border-lightFiskBlue bg-lightFiskBlue text-white rounded px-3 py-1 min-w-[120px] font-medium hover:bg-white hover:text-lightFiskBlue hover:transition-all' onClick={(e) => handleAddToCart(e, data._id)}>Add to Cart</button>
               </div>
 
               <div>

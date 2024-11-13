@@ -40,7 +40,7 @@ const ProductCategoryList = () => {
                             // Decided to specify product = product[0] before referencing it elsewhere
                             product = product[0]
                             return (
-                                <Link to={"/product-category/" + product?.category} className='cursor-pointer' key={product?.category + index}>
+                                <Link to={"/product-category?category=" + product?.category} className='cursor-pointer' key={product?.category + index}>
                                     <div className='w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center'>
                                         <img src={product?.productImage[0]} alt={product?.category} className='h-full object-scale-down mix-blend-multiply hover:scale-125 transistion-all'/>
                                     </div>

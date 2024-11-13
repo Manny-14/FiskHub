@@ -29,7 +29,7 @@ const Cart = () => {
     }
 
     const handleLoading = async() => {
-        fetchData()
+        await fetchData()
     }
 
     useEffect(()=> {
@@ -75,9 +75,9 @@ const Cart = () => {
             <div className='w-full max-w-3xl'>
                 {
                     loading ? (
-                        loadingCart.map(el=>{
+                        loadingCart.map((el, index)=>{
                             return (
-                                <div key={el + "Cart Loading"} className='w-full bg-slate-200 h-32 my-2 border border-slate-300 animate-pulse rounded'>
+                                <div key={el + "Cart Loading" + index} className='w-full bg-slate-200 h-32 my-2 border border-slate-300 animate-pulse rounded'>
 
                                 </div>
                             )

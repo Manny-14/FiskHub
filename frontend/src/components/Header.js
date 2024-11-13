@@ -3,7 +3,7 @@ import Logo from './Logo'
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify'
@@ -17,6 +17,11 @@ const Header = () => {
   const dispatch = useDispatch()
   const [menuDisplay, setMenuDisplay] = useState(false)
   const context = useContext(Context)
+  const navigate = useNavigate()
+  const searchInput = useLocation()
+  const urlSearch = new URLSearchParams(searchInput?.search?.split("=")[1])
+  const searchQuery = urlSearch.getAll("q")
+  const [search, setSearch] = useState(searchQuery)
  
 
   const handleLogout = async() => {
@@ -31,6 +36,7 @@ const Header = () => {
     if(data.success) {
       toast.success(data.message)
       dispatch(setUserDetails(null))
+      navigate("/")
     }
 
     if(data.error) {
@@ -38,7 +44,15 @@ const Header = () => {
     }
   }
 
-  console.log("Items in cart count", context)
+  const handleSearch = (e) => {
+    const { value } = e.target
+    setSearch(value)
+    if(value) {
+      navigate(`/search?q=${value}`)
+    }else{
+      navigate('/')
+    }
+  }
   return (
     <header className='h-17 shadow-md bg-gold fixed w-full z-40'>
       <div className='container mx-auto flex items-center h-full px-2 justify-between'>
@@ -49,7 +63,7 @@ const Header = () => {
         </div>
 
         <div className='hidden md:flex items-center w-full justify-between max-w-sm border rounded-full border-goldGray focus-within:shadow pl-2'>
-          <input type='text' placeholder='search products here...' className='bg-gold w-full outline-none'/>
+          <input type='text' placeholder='search products here...' className='bg-gold w-full outline-none' onChange={handleSearch} value={search}/>
           <div className='text-lg text-gray-200 min-w-[50px] h-8 bg-lightFiskBlue flex items-center justify-center rounded-r-full'>
             <GrSearch/>
           </div>
