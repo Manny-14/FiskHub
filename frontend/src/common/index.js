@@ -72,6 +72,30 @@ const SummaryApi = {
    filter_products : {
     url : `${backendDomain}/api/filter-products`,
     method : 'post'
+   },
+   get_listings : {
+    url : `${backendDomain}/api/get-listings`,
+    method : 'get'
+   },
+   user_update_listings : {
+    url : `${backendDomain}/api/user-update-product`,
+    method : 'post'
+   },
+   delete_listing : {
+    url : `${backendDomain}/api/delete-product`,
+    method : 'post'
+   },
+   user_upload_product : {
+    url : `${backendDomain}/api/user-upload-product`,
+    method : 'post'
+   },
+   payment : {
+    url : `${backendDomain}/api/checkout`,
+    method : 'post'
+   },
+   view_order : {
+    url : `${backendDomain}/api/order-list`,
+    method : 'get'
    }
 }
 

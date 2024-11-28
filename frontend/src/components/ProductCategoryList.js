@@ -35,7 +35,7 @@ const ProductCategoryList = () => {
                         })
                     ) : 
                     (
-                        productCategory.map((product, index) => {
+                        productCategory?.map((product, index) => {
                             // Product is a list of one element because of the way the data is fetched so you always have to put product[0] to get your result
                             // Decided to specify product = product[0] before referencing it elsewhere
                             product = product[0]

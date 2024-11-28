@@ -20,6 +20,13 @@ const viewCartController = require('../controller/user/viewCart')
 const removeProductFromCartController = require('../controller/user/removeProductFromCart')
 const searchProductController = require('../controller/product/searchProduct')
 const filterProductController = require('../controller/product/filterProduct')
+const getListingsController = require('../controller/user/getListings')
+const userUpdateProductController = require('../controller/user/userUpdateProduct')
+const deleteListingController = require('../controller/user/deleteListing')
+const userUploadProductController = require('../controller/user/userUploadProduct')
+const paymentController = require('../controller/order/payment')
+const webhookController = require('../controller/order/webhook')
+const viewOrderController = require('../controller/order/viewOrder')
 
 router.post('/signup', userSignUpController)
 router.post('/signin', userSignInController)
@@ -45,6 +52,17 @@ router.post('/add-to-cart', authToken, addToCartController)
 router.get('/items-in-cart-count', authToken, itemsInCartCountController)
 router.get('/view-cart', authToken, viewCartController)
 router.post('/remove-product-from-cart', authToken, removeProductFromCartController)
+
+// User dashbord
+router.get('/get-listings', authToken, getListingsController)
+router.post('/user-update-product', authToken, userUpdateProductController)
+router.post('/delete-product', authToken, deleteListingController)
+router.post('/user-upload-product', authToken, userUploadProductController)
+
+// Payment and order
+router.post('/checkout', authToken, paymentController)
+router.post('/webhook', webhookController) // /api/webhook
+router.get('/order-list', authToken, viewOrderController)
 
 
 module.exports = router

@@ -9,6 +9,7 @@ import scrollTop from '../helper/scrollTop'
 
 const DisplayProductCategories = ({category, heading}) => {
   const user = UseUser()
+  console.log("user", user)
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const loadingList = new Array(8).fill(null)

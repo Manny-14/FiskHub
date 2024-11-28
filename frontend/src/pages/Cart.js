@@ -4,6 +4,7 @@ import Context from '../context'
 import { getCategoryLabel } from '../helper/productCategory'
 import displayUSDCurrency from '../helper/displayCurrency'
 import { MdDelete } from "react-icons/md";
+import {loadStripe} from '@stripe/stripe-js';
 
 const Cart = () => {
     const context = useContext(Context)
@@ -58,6 +59,33 @@ const Cart = () => {
         }
     }
 
+    const handlePayment = async() => {
+        console.log(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+
+        const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+        const response = await fetch(SummaryApi.payment.url, {
+            method : SummaryApi.payment.method,
+            credentials : 'include',
+            headers : {
+                'content-type' : 'application/json'
+            },
+            body : JSON.stringify({
+                cartItems : data
+            })
+        })
+
+        const responseData = await response.json()
+
+        console.log("Response Data", responseData)
+
+        if(responseData?.id){
+            console.log("Hello?")
+            stripePromise.redirectToCheckout({ sessionId : responseData.id})
+        }
+
+        console.log("payment response", responseData)
+    }
+
     const totalPrice = data.reduce((prev, curr) => prev + (curr?.productId?.price), 0)
 
   return (
@@ -108,7 +136,10 @@ const Cart = () => {
             </div>
 
             {/** Sum Total of items */}
-            <div className='mt-5 lg:mt-0 w-full max-w-sm'>
+
+            {
+                data[0] && (
+                    <div className='mt-5 lg:mt-0 w-full max-w-sm'>
                 {
                     loading ? (
                         <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'>
@@ -127,7 +158,7 @@ const Cart = () => {
                             </div>
 
                             <div className='w-full flex items-center justify-center mt-1'>
-                                <button className='text-lightFiskBlue border-2 border-lightFiskBlue p-2 rounded-full px-5 hover:bg-lightFiskBlue hover:text-white transition-all'>
+                                <button className='text-lightFiskBlue border-2 border-lightFiskBlue p-2 rounded-full px-5 hover:bg-lightFiskBlue hover:text-white transition-all' onClick={handlePayment}>
                                     Buy Now
                                 </button>
                             </div>
@@ -135,6 +166,8 @@ const Cart = () => {
                     )
                 }
             </div>
+                )
+            }
         </div>
         
     </div>

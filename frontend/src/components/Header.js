@@ -19,6 +19,8 @@ const Header = () => {
   const context = useContext(Context)
   const navigate = useNavigate()
   const searchInput = useLocation()
+
+  // To get the search query
   const urlSearch = new URLSearchParams(searchInput?.search?.split("=")[1])
   const searchQuery = urlSearch.getAll("q")
   const [search, setSearch] = useState(searchQuery)
@@ -54,7 +56,7 @@ const Header = () => {
     }
   }
   return (
-    <header className='h-17 shadow-md bg-gold fixed w-full z-40'>
+    <header className='h-16 shadow-md bg-gold fixed w-full z-40'>
       <div className='container mx-auto flex items-center h-full px-2 justify-between'>
         <div className=''>
           <Link to={"/"}>
@@ -93,6 +95,11 @@ const Header = () => {
                       {
                         user?.role === ROLE.ADMIN && (
                           <Link to={"admin-panel/all-products"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(prev => !prev)}>Admin Panel</Link>
+                        )
+                      }
+                      {
+                        user?.role === ROLE.USER && (
+                          <Link to={"dashboard"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(prev => !prev)}>Dashboard</Link>
                         )
                       }
                     </nav>

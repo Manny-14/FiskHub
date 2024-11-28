@@ -33,7 +33,6 @@ const AllUsers = () => {
           toast.error(dataResponse.message)
         }
 
-        console.log(dataResponse)
     }
 
     useEffect(() => {

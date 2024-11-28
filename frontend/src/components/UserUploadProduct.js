@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { IoMdClose } from "react-icons/io";
 import productCategory from '../helper/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -8,122 +8,101 @@ import { TiDelete } from "react-icons/ti";
 import SummaryApi from '../common';
 import { toast } from 'react-toastify'
 import productCondition from '../helper/productCondition';
+import { UseUser } from '../context';
 
-const AdminEditProduct = ({
-    onClose,
-    product,
-    fetchdata
+const UserUploadProduct = ({
+  onClose,
+  fetchData
 }) => {
+  
+  const userId = UseUser()
+  console.log(userId)
 
-    const [data, setData] = useState({
-      ...product,
-      productName : product?.productName,
-      posterName : product?.posterName,
-      category : product?.category,
-      productImage : product?.productImage || [],
-      description : product?.description,
-      price : product?.price,
-      productCondition : product?.productCondition,
-      posterId : product?.posterId,
+  const [data, setData] = useState({
+    productName : "",
+    posterName : "",
+    category : "",
+    productImage : [],
+    description : "",
+    price : "",
+    productCondition : "",
+    posterId : userId
+  })
+
+  const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
+  const [fullScreenImage, setFullScreenImage] = useState("")
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target
+    setData((prev) => {
+      return {
+        ...prev,
+       [name] : value
+      }
     })
+  }
 
-    const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
-    const [fullScreenImage, setFullScreenImage] = useState("")
-    const [allUsers, setAllUsers] = useState([])
-
-    const handleOnChange = (e) => {
-      const { name, value } = e.target
-      setData((prev) => {
-          return {
-          ...prev,
-          [name] : value
-          }
-      })
-    }
-
-    const handleUploadProduct = async(e) => {
+  const handleUploadProduct = async(e) => {
     const file = e.target.files[0]
     // setUploadProductImageInput(file.name) // commenting that out becaue idk if I would need it
 
     const uploadImageCloudinary = await uploadImage(file)
 
     setData((prev) => {
-        return {
+      return {
         ...prev,
         productImage : [ ...prev.productImage, uploadImageCloudinary.url]
-        }
+      }
     })
+  }
+
+  const handleDeleteProductImage = async(index) => {
+    console.log("image index", index)
+
+    const newProductImage = [...data.productImage]
+    newProductImage.splice(index, 1)
+
+    setData((prev) => {
+      return {
+        ...prev,
+        productImage : [...newProductImage]
+      }
+    })
+
+  }
+
+  {/** Upload product */}
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+
+    const response = await fetch(SummaryApi.user_upload_product.url, {
+      method : SummaryApi.user_upload_product.method,
+      credentials : 'include',
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(data)
+    })
+
+    const responseData = await response.json()
+
+    if(responseData.success) {
+      toast.success(responseData?.message)
+      onClose()
+      fetchData()
     }
 
-    const handleDeleteProductImage = async(index) => {
-      console.log("image index", index)
-
-      const newProductImage = [...data.productImage]
-      newProductImage.splice(index, 1)
-
-      setData((prev) => {
-          return {
-          ...prev,
-          productImage : [...newProductImage]
-          }
-      })
-
+    if(responseData.error) {
+      toast.error(responseData?.message)
     }
-
-    {/** Upload product */}
-    const handleSubmit = async(e) => {
-      e.preventDefault()
-
-      const response = await fetch(SummaryApi.update_product.url, {
-          method : SummaryApi.update_product.method,
-          credentials : 'include',
-          headers : {
-          "content-type" : "application/json"
-          },
-          body : JSON.stringify(data)
-      })
-
-      const responseData = await response.json()
-
-      if(responseData.success) {
-          toast.success(responseData?.message)
-          onClose()
-          fetchdata()
-      }
-
-      if(responseData.error) {
-          toast.error(responseData?.message)
-      }
-    }
-
-    {/** Handling assigning userid to a product */}
-    const fetchAllUsers = async() =>  {
-      const fetchData = await fetch(SummaryApi.all_users.url, {
-        method : SummaryApi.all_users.method,
-        credentials : 'include',
-      })
-
-      const data = await fetchData.json()
-
-      if(data.error) {
-        toast.error(data.message)
-      }
-      
-      if(data.success) {
-        setAllUsers(data.data)
-      }
-    }
-    
-    useEffect(()=>{
-      fetchAllUsers()
-    },[])
+  }
 
   return (
     <div className='fixed bg-slate-200 bg-opacity-50 w-full h-full top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
       <div className='bg-white p-4 rounded w-full max-w-2xl h-full max-h-[70%] overflow-hidden'>
         
         <div className='flex justify-between items-center pb-3'>
-          <h2 className='font-bold text-lg'>Edit Product</h2>
+          <h2 className='font-bold text-lg'>Upload Product</h2>
           <div className='w-fit ml-auto text-2xl hover:text-lightFiskBlue cursor-pointer' onClick={onClose}>
             <IoMdClose />
           </div>
@@ -157,7 +136,7 @@ const AdminEditProduct = ({
 
           <label htmlFor='category' className='mt-3'>Category: </label>
           <select value={data.category} name='category' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>
-            <option value={""}>Select Category</option>
+            <option value={""}>select category</option>
             {
               productCategory.map((el, index) => {
                 return (
@@ -240,19 +219,6 @@ const AdminEditProduct = ({
             }
           </select>
 
-          {/** Attempting to implement new feature here */}
-          <label htmlFor='poster' className='mt-3'>Poster: </label>
-          <select value={data.posterId} name='posterId' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>
-            <option value={""}>select poster</option>
-            {
-              allUsers.map((el, index) => {
-                return (
-                  <option value={el._id} key={el._id}>{el?.name || "Unknown User"}</option>
-                )
-              })
-            }
-          </select>
-
           <label htmlFor='description' className='mt-3'>Description:</label>
           <textarea 
             className='h-28 bg-slate-100 border resize-none p-1' 
@@ -267,7 +233,7 @@ const AdminEditProduct = ({
 
           {/** Decided against using selling price at this time */}
 
-          <button className='px-3 py-2 mb-10 bg-lightFiskBlue text-white hover:bg-fiskBlue'>Confirm Changes</button>
+          <button className='px-3 py-2 mb-10 bg-lightFiskBlue text-white hover:bg-fiskBlue'>Upload Product</button>
         </form>
 
       </div>
@@ -283,4 +249,4 @@ const AdminEditProduct = ({
   )
 }
 
-export default AdminEditProduct
+export default UserUploadProduct
