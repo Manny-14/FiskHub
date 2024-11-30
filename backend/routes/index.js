@@ -30,6 +30,7 @@ const viewOrderController = require('../controller/order/viewOrder')
 const updateUserProfileController = require('../controller/user/updateUserProfile')
 const viewAllOrdersController = require('../controller/order/viewAllOrders')
 const forgotPasswordController = require('../controller/user/forgotPassword')
+const submitRatingController = require('../controller/order/submitRating')
 
 router.post('/signup', userSignUpController)
 router.post('/signin', userSignInController)
@@ -69,6 +70,7 @@ router.post('/update-user-profile', authToken, updateUserProfileController)
 router.post('/checkout', authToken, paymentController)
 router.post('/webhook', webhookController) // /api/webhook
 router.get('/order-list', authToken, viewOrderController)
+router.post('/subimt-rating', authToken, submitRatingController)
 
 
 module.exports = router

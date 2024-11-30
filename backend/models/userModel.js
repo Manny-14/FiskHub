@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema({
     password : String,
     profilePic : String,
     role : String,
+    rating : Number,
+    ratingsReceived : Number,
+    productsRated: {
+        type : Object,
+        of : Number,
+        default : {}
+    }
 },{
     timestamps : true
 })

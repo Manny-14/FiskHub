@@ -208,7 +208,7 @@ const UserUploadProduct = ({
           />
 
           <label htmlFor='productCondition' className='mt-3'>Product Condition: </label>
-          <select value={data.productCondition} name='productCondition' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>
+          <select value={data.productCondition} name='productCondition' onChange={handleOnChange} className='p-2 bg-slate-200 border rounded' required>
             <option value={""}>select product condition</option>
             {
               productCondition.map((el, index) => {

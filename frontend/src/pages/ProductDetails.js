@@ -7,6 +7,7 @@ import displayUSDCurrency from '../helper/displayCurrency'
 import DisplayProductCategories from '../components/DisplayProductCategories'
 import addToCart from '../helper/addToCart'
 import { UseUser } from '../context'
+import { FaStar, FaStarHalf } from 'react-icons/fa'
 
 const ProductDetails = () => {
 
@@ -20,6 +21,7 @@ const ProductDetails = () => {
     description : '',
     price : '',
     productCondition : '',
+    posterRating : 0
   })
 
   const params = useParams()
@@ -37,7 +39,6 @@ const ProductDetails = () => {
 
 
   const fetchProductDetails = async() => {
-    console.log("hi")
     const response = await fetch(SummaryApi.product_details.url, {
       method : SummaryApi.product_details.method,
       headers : {
@@ -54,6 +55,8 @@ const ProductDetails = () => {
     setActiveImage(dataResponse?.data?.productImage[0])
   }
 
+  console.log("data from product details",data)
+
 
   useEffect(() => {
     setLoading(true)
@@ -68,7 +71,6 @@ const ProductDetails = () => {
   const handleZoomImage = useCallback((e) => {
     setZoomImage(true)
     const { left, top, width, height } = e.target.getBoundingClientRect()
-    console.log("coordinate", left, top, width, height)
     const x = (e.clientX - left) / width
     const y = (e.clientY - top) / height
 
@@ -183,6 +185,19 @@ const ProductDetails = () => {
               <p className='text-slate-400'>{getCategoryLabel(data?.category)}</p>
               <p className='text-3xl font-medium text-lightFiskBlue'>{displayUSDCurrency(data?.price)}</p>
               <p>Condition: {getConditionLabel(data?.productCondition)}</p>
+
+              {
+                data?.posterRating > 0 && (
+                  <div className='text-lightFiskBlue flex items-center gap-1 text-xl'>
+                      {
+                        <div className='flex items-center justify-center gap-1'>
+                          <div>Seller Rating: {data.posterRating}</div>
+                          <FaStar className='text-gold'/>
+                        </div>
+                      }
+                  </div>
+                )
+              }
 
               <div className='flex items-center gap-3 my-2'>
                 <button className='border-2 border-lightFiskBlue rounded px-3 py-1 min-w-[120px] text-lightFiskBlue font-medium hover:bg-lightFiskBlue hover:text-white hover:transition-all' onClick={(e)=> handleBuy(e, data._id)}>Buy</button>

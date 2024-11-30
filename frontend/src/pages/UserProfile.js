@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaRegCircleUser } from 'react-icons/fa6'
+import { FaRegCircleUser, FaStar } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
 import { MdEdit } from "react-icons/md";
 import imageToBase64 from '../helper/imageToBase64';
@@ -24,7 +24,8 @@ const UserProfile = () => {
             setData({
                 userName : user.name,
                 userEmail : user.email,
-                profilePicture : user.profilePic
+                profilePicture : user.profilePic,
+                rating : user.rating
             })
         }
     },[user])
@@ -126,15 +127,25 @@ const UserProfile = () => {
             ) : (
                 <div className='bg-white py-8 px-6 flex flex-col items-center justify-center shadow-md rounded-lg gap-10 relative'>
                     <MdEdit className='absolute right-0 top-0 m-3 text-2xl cursor-pointer' onClick={()=>setEdit(true)}/>
-                    <div className='text-8xl'>
+                    <div className='flex items-center gap-10 border-b-2 pb-4 w-full'>
+                        <div className='text-8xl'>
+                            {
+                                user?.profilePic ? (
+                                <img src={user?.profilePic} className='w-24 h-24 rounded-full' alt={user?.name}/>
+                                ) : (
+                                <FaRegCircleUser/>
+                                )
+                            }
+                        </div>
                         {
-                            user?.profilePic ? (
-                            <img src={user?.profilePic} className='w-24 h-24 rounded-full' alt={user?.name}/>
-                            ) : (
-                            <FaRegCircleUser/>
+                            data.rating > 0 && (
+                                <div className='flex items-center justify-center gap-1 text-3xl font-medium'>
+                                    <div>{data.rating}</div>
+                                    <FaStar className='text-gold'/>
+                                </div>
                             )
                         }
-                    </div>
+                        </div>
                     <div>
                         <div className='flex flex-col gap-7'>
                             <div className='flex items-center justify-between gap-5'>

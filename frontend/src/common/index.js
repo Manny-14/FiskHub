@@ -108,7 +108,11 @@ const SummaryApi = {
    view_all_orders : {
     url  : `${backendDomain}/api/all-orders`,
     method : 'get'
-   }
+   },
+   submit_rating : {
+    url : `${backendDomain}/api/subimt-rating`,
+    method : 'post'
+   },
 }
 
 export default SummaryApi
