@@ -3,7 +3,7 @@ const productModel = require("../../models/productModel")
 const getProductByCategoryController = async(req, res) => {
     try {
         const { category } = req?.body || req?.query
-        const product = await productModel.find({ category })
+        const product = await productModel.find({ category, sold : "false" })
 
         res.json({
             data : product,

@@ -31,6 +31,7 @@ const Dashboard = () => {
                 <nav className='grid p-4'>
                     <Link to={"user-profile"} className='px-2 py-1 hover:bg-slate-100'>User Profile</Link>
                     <Link to={"listings"} className='px-2 py-1 hover:bg-slate-100'>Listings</Link>
+                    <Link to={"order"} className='px-2 py-1 hover:bg-slate-100'>Orders</Link>
                 </nav>
             </div>
         </aside>

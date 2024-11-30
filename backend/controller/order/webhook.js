@@ -1,6 +1,7 @@
 const stripe = require('../../config/stripe')
 const cartModel = require('../../models/cart')
 const orderModel = require('../../models/orderModel')
+const productModel = require('../../models/productModel')
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
@@ -61,8 +62,14 @@ const webhookController = async(request, response) => {
 
             const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
 
+
             const productDetails = await getLineItems(lineItems)
 
+            await Promise.all(productDetails.map(async (product) => {
+                console.log("Hi, we arrived here", product)
+                const productId = product.productId;
+                await productModel.findByIdAndUpdate(productId, { sold: "true" });
+            }));
 
             const orderDetails = {
                 productDetails  : productDetails,

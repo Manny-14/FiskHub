@@ -7,7 +7,8 @@ const filterProductController = async(req, res) => {
         const product = await productModel.find({
             category : {
                 "$in" : categoryList
-            }
+            }, 
+            sold : "false"
         })
 
         res.json({

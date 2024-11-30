@@ -7,16 +7,15 @@ const searchProductController = async(req, res) => {
         const regex = new RegExp(query, 'ig')
 
         const product = await productModel.find({
-            "$or" : [
+            "$and" : [
                 {
-                    productName : regex
+                    "$or" : [
+                        { productName : regex},
+                        {category : regex},
+                        {posterName : regex},
+                    ]
                 },
-                {
-                    category : regex
-                },
-                {
-                    posterName : regex
-                },
+                { sold : "false"}
             ]
         })
 

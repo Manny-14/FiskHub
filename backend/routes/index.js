@@ -27,15 +27,20 @@ const userUploadProductController = require('../controller/user/userUploadProduc
 const paymentController = require('../controller/order/payment')
 const webhookController = require('../controller/order/webhook')
 const viewOrderController = require('../controller/order/viewOrder')
+const updateUserProfileController = require('../controller/user/updateUserProfile')
+const viewAllOrdersController = require('../controller/order/viewAllOrders')
+const forgotPasswordController = require('../controller/user/forgotPassword')
 
 router.post('/signup', userSignUpController)
 router.post('/signin', userSignInController)
 router.get('/user-details', authToken, userDetailsController)
 router.get('/user-logout', userLogoutController)
+router.post('/forgot-password', forgotPasswordController)
 
 // Admin panel
 router.get('/all-users', authToken, allUsersController)
 router.post('/update-user', authToken, updateUser)
+router.get('/all-orders', authToken, viewAllOrdersController)
 
 // product
 router.post('/upload-product', authToken, UploadProductController)
@@ -58,6 +63,7 @@ router.get('/get-listings', authToken, getListingsController)
 router.post('/user-update-product', authToken, userUpdateProductController)
 router.post('/delete-product', authToken, deleteListingController)
 router.post('/user-upload-product', authToken, userUploadProductController)
+router.post('/update-user-profile', authToken, updateUserProfileController)
 
 // Payment and order
 router.post('/checkout', authToken, paymentController)

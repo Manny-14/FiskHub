@@ -15,7 +15,7 @@ const getProductCategory = async(req, res) => {
             {/** If you ever decide to just use the first object in the category instead
                 Make sure to edit the way fetch productCategory handles data in ProductCategoryList.js */}
             const product = await productModel.aggregate([
-                { $match: { category } },
+                { $match: { category, sold: "false" } },
                 { $sample: { size: 1 } }
             ]);
 

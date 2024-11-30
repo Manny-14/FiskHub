@@ -47,11 +47,18 @@ const Header = () => {
   }
 
   const handleSearch = (e) => {
-    const { value } = e.target
-    setSearch(value)
-    if(value) {
-      navigate(`/search?q=${value}`)
-    }else{
+    if(e?.target) {
+      const { value } = e.target
+      setSearch(value)
+      if(value) {
+        navigate(`/search?q=${value}`)
+      }else{
+        navigate('/')
+      }
+    } else if(search) {
+      navigate(`/search?q=${search}`)
+    } 
+    if(!search) {
       navigate('/')
     }
   }
@@ -66,7 +73,7 @@ const Header = () => {
 
         <div className='hidden md:flex items-center w-full justify-between max-w-sm border rounded-full border-goldGray focus-within:shadow pl-2'>
           <input type='text' placeholder='search products here...' className='bg-gold w-full outline-none' onChange={handleSearch} value={search}/>
-          <div className='text-lg text-gray-200 min-w-[50px] h-8 bg-lightFiskBlue flex items-center justify-center rounded-r-full'>
+          <div className='text-lg text-gray-200 min-w-[50px] h-8 bg-lightFiskBlue flex items-center justify-center rounded-r-full cursor-pointer' onClick={() => handleSearch()}>
             <GrSearch/>
           </div>
         </div>
@@ -99,7 +106,7 @@ const Header = () => {
                       }
                       {
                         user?.role === ROLE.USER && (
-                          <Link to={"dashboard"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(prev => !prev)}>Dashboard</Link>
+                          <Link to={"dashboard/listings"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(prev => !prev)}>Dashboard</Link>
                         )
                       }
                     </nav>

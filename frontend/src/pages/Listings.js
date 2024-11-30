@@ -31,7 +31,7 @@ const Listings = () => {
 
 
       { /** All Products */ }
-      <div className='flex items-center flex-wrap gap-5 py-3 h-[calc(100vh-190px)] overflow-y-scroll'>
+      <div className='flex h-fit flex-wrap gap-5 py-3 overflow-y-scroll'>
         {
           userListings.map((product, index) => {
             return (

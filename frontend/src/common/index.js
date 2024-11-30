@@ -9,6 +9,10 @@ const SummaryApi = {
     url : `${backendDomain}/api/signin`,
     method : 'post'
    },
+   forgot_password : {
+    url : `${backendDomain}/api/forgot-password`,
+    method : 'post'
+   },
    current_user : {
     url : `${backendDomain}/api/user-details`,
     method : 'get'
@@ -89,12 +93,20 @@ const SummaryApi = {
     url : `${backendDomain}/api/user-upload-product`,
     method : 'post'
    },
+   user_update_profile : {
+    url : `${backendDomain}/api/update-user-profile`,
+    method : 'post'
+   },
    payment : {
     url : `${backendDomain}/api/checkout`,
     method : 'post'
    },
    view_order : {
     url : `${backendDomain}/api/order-list`,
+    method : 'get'
+   },
+   view_all_orders : {
+    url  : `${backendDomain}/api/all-orders`,
     method : 'get'
    }
 }

@@ -10,8 +10,6 @@ const AllProducts = () => {
     const response = await fetch(SummaryApi.all_products.url)
     const dataResponse = await response.json()
 
-    console.log("product data", response)
-
     setAllProducts(dataResponse?.data || [])
   }
 

@@ -25,11 +25,13 @@ const AdminEditProduct = ({
       price : product?.price,
       productCondition : product?.productCondition,
       posterId : product?.posterId,
+      sold : product?.sold,
     })
 
     const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
     const [fullScreenImage, setFullScreenImage] = useState("")
     const [allUsers, setAllUsers] = useState([])
+    const sold = ['true', 'false']
 
     const handleOnChange = (e) => {
       const { name, value } = e.target
@@ -240,14 +242,26 @@ const AdminEditProduct = ({
             }
           </select>
 
-          {/** Attempting to implement new feature here */}
-          <label htmlFor='poster' className='mt-3'>Poster: </label>
+          {/** Code for editing posters of products */}
+          {/* <label htmlFor='poster' className='mt-3'>Poster: </label>
           <select value={data.posterId} name='posterId' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>
             <option value={""}>select poster</option>
             {
               allUsers.map((el, index) => {
                 return (
                   <option value={el._id} key={el._id}>{el?.name || "Unknown User"}</option>
+                )
+              })
+            }
+          </select> */}
+
+          <label htmlFor='sold' className='mt-3'>Sold?: </label>
+          <select value={data.sold} name='sold' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>
+            <option value={""}>select option</option>
+            {
+              sold.map((el, index) => {
+                return (
+                  <option value={el} key={el + index}>{el}</option>
                 )
               })
             }
