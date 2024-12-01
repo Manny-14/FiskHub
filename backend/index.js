@@ -26,8 +26,9 @@ app.use((req, res, next) => {
     next();
 });
 
-
+console.log("Does this even log")
 const PORT = process.env.PORT || 8080
+console.log("PORT", PORT)
 
 connectDB().then(() => {
     app.listen(PORT, () => {
