@@ -15,23 +15,22 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/api', router)
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Credentials", "true");
-    if (req.method === "OPTIONS") {
-        return res.sendStatus(200);
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+//     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//     res.header("Access-Control-Allow-Credentials", "true");
+//     if (req.method === "OPTIONS") {
+//         return res.sendStatus(200);
+//     }
+//     next();
+// });
 
 console.log("Does this even log")
 const PORT = process.env.PORT || 8080
 console.log("PORT", PORT)
 
 connectDB().then(() => {
-    console.log("Did I connect to DB yet")
     app.listen(PORT, () => {
         console.log('Connected to MongoDB')
         console.log(`Listening on port ${PORT}`)
