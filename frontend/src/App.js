@@ -23,6 +23,7 @@ function App() {
     })
 
     const dataApi = await dataResponse.json()
+    console.log("Trying to find user", dataApi)
 
     if(dataApi.success){
       dispatch(setUserDetails(dataApi.data))
