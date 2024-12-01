@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { default: mongoose } = require('mongoose') // Idk what this does
+const { default: mongoose } = require('mongoose')
 require('dotenv').config()
 const connectDB = require('./config/db')
 const router = require('./routes')
