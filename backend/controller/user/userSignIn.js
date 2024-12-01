@@ -27,6 +27,7 @@ async function userSignInController(req, res) {
                 email : user.email
             }
             const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: 60 * 60 * 8 });
+            console.log("is the token in the room with us", token)
 
             const tokenOption = {
                 httpOnly : true,
