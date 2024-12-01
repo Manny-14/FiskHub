@@ -31,6 +31,7 @@ const PORT = process.env.PORT || 8080
 console.log("PORT", PORT)
 
 connectDB().then(() => {
+    console.log("Did I connect to DB yet")
     app.listen(PORT, () => {
         console.log('Connected to MongoDB')
         console.log(`Listening on port ${PORT}`)
