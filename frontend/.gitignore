@@ -25,3 +25,6 @@ yarn-error.log*
 .env
 # Amit's assets
 /src/assets/amit_assets
+
+#products
+/src/assets/products
