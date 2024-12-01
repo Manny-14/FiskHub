@@ -4,6 +4,8 @@ async function authToken(req, res, next) {
     try {
         const token = req.cookies?.[process.env.FRONTEND_URL]?.token
         console.log("Token", token)
+        console.log("request", req)
+        console.log("cookies", req.cookies)
 
         if(!token) {
             return res.status(200).json({
