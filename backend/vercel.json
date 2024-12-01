@@ -14,7 +14,7 @@
             "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
             "headers": 
                 {
-                    "Access-Control-Allow-Origin": "https://fiskhub.vercel.app",
+                    "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
                     "Access-Control-Allow-Headers": "Content-Type, Authorization"
                 }
