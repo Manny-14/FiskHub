@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Logo from './Logo'
-import { GrSearch } from "react-icons/gr";
-import { FaRegCircleUser } from 'react-icons/fa6';
+import { FaSearch } from "react-icons/fa";
+import { FaRegCircleUser, FaS } from 'react-icons/fa6';
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,7 +74,7 @@ const Header = () => {
         <div className='hidden md:flex items-center w-full justify-between max-w-sm border rounded-full border-goldGray focus-within:shadow pl-2'>
           <input type='text' placeholder='search products here...' className='bg-gold w-full outline-none' onChange={handleSearch} value={search}/>
           <div className='text-lg text-gray-200 min-w-[50px] h-8 bg-lightFiskBlue flex items-center justify-center rounded-r-full cursor-pointer' onClick={() => handleSearch()}>
-            <GrSearch/>
+            <FaSearch/>
           </div>
         </div>
 
