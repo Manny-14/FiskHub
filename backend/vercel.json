@@ -13,7 +13,18 @@
             "dest" : "/",
             "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
             "headers": [
-                { "key": "Access-Control-Allow-Origin", "value": "*" }
+                {
+                    "source": "/(.*)",
+                    "headers": [
+                    { "key": "Access-Control-Allow-Origin", "value": "*" }
+                    ]
+                },
+                {
+                    "source": "/https://fiskhub.vercel.app/(.*)",
+                    "headers": [
+                    { "key": "Access-Control-Allow-Origin", "value": "*" }
+                    ]
+                }  
             ]
         }
     ]
