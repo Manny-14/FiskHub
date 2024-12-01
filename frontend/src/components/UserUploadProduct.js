@@ -75,6 +75,13 @@ const UserUploadProduct = ({
   const handleSubmit = async(e) => {
     e.preventDefault()
 
+    setData((prev) => {
+      return {
+        ...prev,
+        sold : "false"
+      }
+    })
+
     const response = await fetch(SummaryApi.user_upload_product.url, {
       method : SummaryApi.user_upload_product.method,
       credentials : 'include',

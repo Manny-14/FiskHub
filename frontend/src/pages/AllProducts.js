@@ -25,7 +25,7 @@ const AllProducts = () => {
 
 
       { /** All Products */ }
-      <div className='flex items-center flex-wrap gap-5 py-3 h-[calc(100vh-190px)] overflow-y-scroll'>
+      <div className='flex items-center justify-between flex-wrap gap-5 py-3 h-[calc(100vh-190px)] overflow-y-scroll'>
         {
           allProducts.map((product, index) => {
             return (

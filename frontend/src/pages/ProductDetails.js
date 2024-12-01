@@ -7,7 +7,7 @@ import displayUSDCurrency from '../helper/displayCurrency'
 import DisplayProductCategories from '../components/DisplayProductCategories'
 import addToCart from '../helper/addToCart'
 import { UseUser } from '../context'
-import { FaStar, FaStarHalf } from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
 
 const ProductDetails = () => {
 

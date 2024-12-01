@@ -243,7 +243,7 @@ const AdminEditProduct = ({
           </select>
 
           {/** Code for editing posters of products */}
-          {/* <label htmlFor='poster' className='mt-3'>Poster: </label>
+          <label htmlFor='poster' className='mt-3'>Poster: </label>
           <select value={data.posterId} name='posterId' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>
             <option value={""}>select poster</option>
             {
@@ -253,7 +253,7 @@ const AdminEditProduct = ({
                 )
               })
             }
-          </select> */}
+          </select>
 
           <label htmlFor='sold' className='mt-3'>Sold?: </label>
           <select value={data.sold} name='sold' onChange={handleOnChange} className='p-2 bg-slate-100 border rounded' required>

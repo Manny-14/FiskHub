@@ -95,11 +95,11 @@ const ProductCategory = () => {
     },[sortBy])
     
   return (
-    <div className='container mx-auto p-4'>
+    <div className='container p-4'>
       {/** Desktop version */}
       <div className='hidden lg:grid grid-cols-[200px,1fr]'>
         {/** Left side */}
-        <div className='bg-white p-2 min-h-[calc(100vh-150px)] overflow-y-scroll'>
+        <div className='bg-white p-2 min-h-[calc(100vh-200px)] overflow-y-scroll'>
           {/** Sort by */}
           <div className='text-lg'>
             <h3 className='uppercase font-medium text-slate-500 text-base border-b border-slate-300 pb-1'>Sort by</h3>
